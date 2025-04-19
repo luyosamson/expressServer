@@ -47,18 +47,9 @@ app.use(express.json());
 //Serve static files
 app.use(express.static(path.join(__dirname,'/public')));
 
-app.get(/^\/$|^\/index(.html)?$/, (req,res)=>{
-    res.sendFile(path.join(__dirname,'views','index.html'))
-})
+app.use('/subdir',require('./routes/subdir'));
+app.use('/subdir',express.static(path.join(__dirname,'/public')));
 
-
-app.get(/^\/new-page(.html)?$/, (req,res)=>{
-    res.sendFile(path.join(__dirname,'views','new-page.html'))
-})
-
-app.get(/^\/old-page(.html)?$/, (req,res)=>{
-    res.redirect(301,'/new-page.html') // 301 = permanent redirect
-})
 
 //Route handlers
 app.get(/.*/, (req, res) => {
